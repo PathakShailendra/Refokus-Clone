@@ -1,8 +1,13 @@
-import React from 'react'
-import Product from './Product'
+import React, { useState } from "react";
+import Product from "./Product";
+import { motion } from "framer-motion";
+import arqitel from "../assets/arqitel.mp4";
+import rainfall from "../assets/rainfall.mp4";
+import ttr from "../assets/ttr.mp4";
+import yahoo from "../assets/yahoo.mp4";
+import yir from "../assets/yir.mp4";
 
 const Products = () => {
-
   var products = [
     {
       title: "Arqitel",
@@ -41,11 +46,63 @@ const Products = () => {
     },
   ];
 
-  return (
-    <div className='bg-zinc-900 pt-14'>
-      {products.map((val, index) => <Product val={val} />)}
-    </div>
-  )
-}
+  const [pos, setPos] = useState(0);
 
-export default Products
+  const mover = (val) => {
+    setPos(val * 15);
+  };
+
+  return (
+    <div className="bg-zinc-900 pt-14 relative">
+      {products.map((val, index) => (
+        <Product key={index} count={index} val={val} mover={mover} />
+      ))}
+      <div className="absolute top-0 w-full h-full pointer-events-none">
+        <motion.div
+          initial={{ y: pos, x: "-50%" }}
+          animate={{ y: pos + `rem` }}
+          transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.5 }}
+          className="window absolute w-[20rem] h-[15rem] bg-white left-[45%] overflow-hidden"
+        >
+          <motion.div
+            animate={{ y: -pos + `rem` }}
+            transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.5 }}
+            className="w-full h-full bg-sky-100"
+          >
+            <video autoPlay muted loop src={arqitel} className="absolute object-cover"></video>
+          </motion.div>
+          <motion.div
+            animate={{ y: -pos + `rem` }}
+            transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.5 }}
+            className="w-full h-full bg-sky-200"
+          >
+            <video autoPlay muted loop src={ttr} className="absolute object-cover"></video>
+          </motion.div>
+          <motion.div
+            animate={{ y: -pos + `rem` }}
+            transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.5 }}
+            className="w-full h-full bg-sky-300"
+          >
+            <video autoPlay muted loop src={yir} className="absolute object-cover"></video>
+          </motion.div>
+          <motion.div
+            animate={{ y: -pos + `rem` }}
+            transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.5 }}
+            className="w-full h-full bg-sky-400"
+          >
+            <video autoPlay muted loop src={yahoo} className="absolute object-cover"></video>
+          </motion.div>
+          <motion.div
+            animate={{ y: -pos + `rem` }}
+            transition={{ ease: [0.76, 0, 0.24, 1], duration: 0.5 }}
+            className="w-full h-full bg-sky-500"
+          >
+            <video autoPlay muted loop src={rainfall} className="absolute object-cover"></video>
+          </motion.div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default Products;
